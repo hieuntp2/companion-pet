@@ -16,7 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -81,7 +85,7 @@ private fun CameraPreviewPlaceholder(overlayItems: List<VisionOverlayItem>) {
     }
 }
 
-private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawBoundingBox(
+private fun DrawScope.drawBoundingBox(
     rect: Rect,
     label: String,
     confidence: Float
@@ -94,16 +98,18 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawBoundingBox(
         size = androidx.compose.ui.geometry.Size(bottomRight.x - topLeft.x, bottomRight.y - topLeft.y),
         style = Stroke(width = 4f)
     )
-    drawContext.canvas.nativeCanvas.drawText(
-        "$label ${(confidence * 100).toInt()}%",
-        topLeft.x,
-        topLeft.y - 8f,
-        android.graphics.Paint().apply {
-            color = android.graphics.Color.WHITE
-            textSize = 32f
-            style = android.graphics.Paint.Style.FILL
-        }
-    )
+    drawIntoCanvas { canvas ->
+        canvas.nativeCanvas.drawText(
+            "$label ${(confidence * 100).toInt()}%",
+            topLeft.x,
+            topLeft.y - 8f,
+            android.graphics.Paint().apply {
+                color = android.graphics.Color.WHITE
+                textSize = 32f
+                style = android.graphics.Paint.Style.FILL
+            }
+        )
+    }
 }
 
 @Composable
@@ -149,4 +155,4 @@ fun MemorySummary(entities: List<String>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun stringResourceSafe(resId: Int): String = androidx.compose.ui.res.stringResource(id = resId)
+private fun stringResourceSafe(resId: Int): String = stringResource(id = resId)
