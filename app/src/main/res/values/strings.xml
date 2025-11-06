@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Companion Pet</string>
+    <string name="connect">Kết nối</string>
+    <string name="push_to_talk">Giữ để nói</string>
+    <string name="teach">Dạy</string>
+    <string name="camera_preview_unavailable">Không thể hiển thị camera</string>
+    <string name="listening">Đang lắng nghe...</string>
+    <string name="connected_to_device">Đã kết nối tới %1$s</string>
+    <string name="disconnected">Chưa kết nối</string>
+    <string name="speech_prompt">Nói điều bạn muốn Companion làm</string>
+    <string name="teach_prompt">Đưa đối tượng vào khung để dạy</string>
+</resources>
